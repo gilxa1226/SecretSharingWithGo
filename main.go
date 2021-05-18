@@ -35,6 +35,7 @@ func secretPostHandler(writer http.ResponseWriter, request *http.Request) {
 			io.WriteString(hash, sp.PlainText)
 			strhash := hex.EncodeToString(hash.Sum(nil))
 			secretMap[strhash] = sp.PlainText
+			writer.Header().Set("content-type", "application/json")
 			fmt.Fprintf(writer, "{ \"id\": \"%s\" }", strhash)
 		} else {
 			writer.WriteHeader(400)
@@ -45,6 +46,7 @@ func secretPostHandler(writer http.ResponseWriter, request *http.Request) {
 func secretGetHandler(writer http.ResponseWriter, request *http.Request) {
 	id := request.URL.Path[1:]
 	secret := secretMap[id]
+	writer.Header().Set("content-type", "application/json")
 	if len(id) == 0 || secret == "" {
 		writer.WriteHeader(404)
 		fmt.Fprintf(writer, "{\"data\": \"\"}")
