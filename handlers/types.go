@@ -9,7 +9,7 @@ type createSecretResponse struct {
 }
 
 type getSecretResponse struct {
-	Secret string `json:"secret"`
+	Secret string `json:"data"`
 }
 
 type secretData struct {
